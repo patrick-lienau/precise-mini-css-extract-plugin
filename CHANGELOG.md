@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.2](https://github.com/patrick-lienau/precise-mini-css-extract-plugin/compare/v0.1.0...v2.7.2) (2023-01-27)
+
+
+### Features
+
+* shouldReloadLink filtering logic implemented ([b3c4c60](https://github.com/patrick-lienau/precise-mini-css-extract-plugin/commit/b3c4c609120dddb2d022bf658832dd2e8c825728))
+
 ## 0.1.0 (2023-01-27)
 
 
