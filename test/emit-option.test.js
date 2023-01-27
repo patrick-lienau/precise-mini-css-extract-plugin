@@ -5,7 +5,7 @@ import path from "path";
 import webpack from "webpack";
 import del from "del";
 
-import MiniCssExtractPlugin from "../src";
+import PreciseMiniCssExtractPlugin from "../src";
 
 import {
   compile,
@@ -28,7 +28,7 @@ describe("emit option", () => {
         },
 
         plugins: [
-          new MiniCssExtractPlugin({
+          new PreciseMiniCssExtractPlugin({
             filename: "[name].css",
           }),
         ],
@@ -56,7 +56,7 @@ describe("emit option", () => {
         },
 
         plugins: [
-          new MiniCssExtractPlugin({
+          new PreciseMiniCssExtractPlugin({
             filename: "[name].css",
           }),
         ],
@@ -83,7 +83,7 @@ describe("emit option", () => {
           path: path.resolve(__dirname, "../outputs"),
         },
         plugins: [
-          new MiniCssExtractPlugin({
+          new PreciseMiniCssExtractPlugin({
             filename: "[name].css",
           }),
         ],
@@ -113,7 +113,7 @@ describe("emit option", () => {
               test: /\.css$/,
               use: [
                 {
-                  loader: MiniCssExtractPlugin.loader,
+                  loader: PreciseMiniCssExtractPlugin.loader,
                   options: {
                     emit: false,
                   },
@@ -129,7 +129,7 @@ describe("emit option", () => {
           ],
         },
         plugins: [
-          new MiniCssExtractPlugin({
+          new PreciseMiniCssExtractPlugin({
             filename: "[name].css",
           }),
         ],
@@ -185,7 +185,7 @@ describe("emit option", () => {
             test: /\.css$/,
             use: [
               {
-                loader: MiniCssExtractPlugin.loader,
+                loader: PreciseMiniCssExtractPlugin.loader,
                 options: {
                   emit: false,
                 },
@@ -201,7 +201,7 @@ describe("emit option", () => {
         ],
       },
       plugins: [
-        new MiniCssExtractPlugin({
+        new PreciseMiniCssExtractPlugin({
           filename: "[name].css",
         }),
         new AssetsModifyPlugin({
@@ -289,7 +289,7 @@ describe("emit option", () => {
             test: /\.css$/,
             use: [
               {
-                loader: MiniCssExtractPlugin.loader,
+                loader: PreciseMiniCssExtractPlugin.loader,
                 options: {
                   emit: false,
                 },
@@ -307,7 +307,7 @@ describe("emit option", () => {
         ],
       },
       plugins: [
-        new MiniCssExtractPlugin({
+        new PreciseMiniCssExtractPlugin({
           filename: "[name].css",
         }),
       ],
@@ -403,7 +403,7 @@ describe("emit option", () => {
             test: /\.css$/,
             use: [
               {
-                loader: MiniCssExtractPlugin.loader,
+                loader: PreciseMiniCssExtractPlugin.loader,
                 options: {
                   emit: false,
                 },
@@ -421,7 +421,7 @@ describe("emit option", () => {
         ],
       },
       plugins: [
-        new MiniCssExtractPlugin({
+        new PreciseMiniCssExtractPlugin({
           filename: "[name].css",
         }),
         new AssetsModifyPlugin({

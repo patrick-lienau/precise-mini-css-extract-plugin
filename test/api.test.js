@@ -1,17 +1,17 @@
 import webpack from "webpack";
 
-import MiniCssExtractPlugin from "../src";
+import PreciseMiniCssExtractPlugin from "../src";
 
 describe("API", () => {
   it("should return the same CssModule when same webpack instance provided", () => {
-    expect(MiniCssExtractPlugin.getCssModule(webpack)).toEqual(
-      MiniCssExtractPlugin.getCssModule(webpack)
+    expect(PreciseMiniCssExtractPlugin.getCssModule(webpack)).toEqual(
+      PreciseMiniCssExtractPlugin.getCssModule(webpack)
     );
   });
 
   it("should return the same CssDependency when same webpack instance provided", () => {
-    expect(MiniCssExtractPlugin.getCssDependency(webpack)).toEqual(
-      MiniCssExtractPlugin.getCssDependency(webpack)
+    expect(PreciseMiniCssExtractPlugin.getCssDependency(webpack)).toEqual(
+      PreciseMiniCssExtractPlugin.getCssDependency(webpack)
     );
   });
 });

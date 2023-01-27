@@ -2,7 +2,7 @@ const cssLoaderPath = require.resolve("css-loader").replace(/\\/g, "/");
 
 module.exports = [
   "",
-  "WARNING in chunk styles [mini-css-extract-plugin]",
+  "WARNING in chunk styles [precise-mini-css-extract-plugin]",
   "Conflicting order. Following module has been added:",
   ` * css ${cssLoaderPath}!./e2.css`,
   "despite it was not able to fulfill desired ordering with these modules:",

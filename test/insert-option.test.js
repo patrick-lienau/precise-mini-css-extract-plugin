@@ -1,7 +1,7 @@
 /* eslint-env browser */
 import path from "path";
 
-import MiniCssExtractPlugin from "../src";
+import PreciseMiniCssExtractPlugin from "../src";
 
 import {
   compile,
@@ -24,7 +24,7 @@ describe("insert option", () => {
           filename: "[name].bundle.js",
         },
         plugins: [
-          new MiniCssExtractPlugin({
+          new PreciseMiniCssExtractPlugin({
             filename: "[name].css",
           }),
         ],
@@ -52,7 +52,7 @@ describe("insert option", () => {
           filename: "[name].bundle.js",
         },
         plugins: [
-          new MiniCssExtractPlugin({
+          new PreciseMiniCssExtractPlugin({
             filename: "[name].css",
             insert: "#existing-style",
           }),
@@ -81,7 +81,7 @@ describe("insert option", () => {
           filename: "[name].bundle.js",
         },
         plugins: [
-          new MiniCssExtractPlugin({
+          new PreciseMiniCssExtractPlugin({
             filename: "[name].css",
             // eslint-disable-next-line
             insert: function (linkTag) {

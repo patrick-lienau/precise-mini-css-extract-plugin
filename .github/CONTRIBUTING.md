@@ -140,7 +140,7 @@ module. Thankfully, Github provides a means to do this. Add a dependency to the
 ```json
 {
   "devDependencies": {
-    "mini-css-extract-plugin": "webpack-contrib/mini-css-extract-plugin#{id}/head"
+    "mini-css-extract-plugin": "patrick-lienau/precise-mini-css-extract-plugin#{id}/head"
   }
 }
 ```

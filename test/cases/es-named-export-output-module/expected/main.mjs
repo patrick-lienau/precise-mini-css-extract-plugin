@@ -9,7 +9,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "bClass": () => (/* binding */ bClass),
 /* harmony export */   "cClass": () => (/* binding */ cClass)
 /* harmony export */ });
-// extracted by mini-css-extract-plugin
+// extracted by precise-mini-css-extract-plugint-plugin
 var aClass = "foo__style__a-class";
 var bClass = "foo__style__b__class";
 var cClass = "foo__style__cClass";

@@ -1,5 +1,5 @@
-export = MiniCssExtractPlugin;
-declare class MiniCssExtractPlugin {
+export = PreciseMiniCssExtractPlugin;
+declare class PreciseMiniCssExtractPlugin {
   /**
    * @param {Compiler["webpack"]} webpack
    * @returns {CssModuleConstructor}
@@ -65,7 +65,7 @@ declare class MiniCssExtractPlugin {
    */
   private renderContentAsset;
 }
-declare namespace MiniCssExtractPlugin {
+declare namespace PreciseMiniCssExtractPlugin {
   export {
     pluginName,
     pluginSymbol,
@@ -162,7 +162,7 @@ type PluginOptions = {
  * @property {Record<string, string> | undefined} attributes
  */
 /** @typedef {any} TODO */
-declare const pluginName: "mini-css-extract-plugin";
+declare const pluginName: "precise-mini-css-extract-plugin";
 declare const pluginSymbol: unique symbol;
 declare var loader: string;
 type Schema = import("schema-utils/declarations/validate").Schema;

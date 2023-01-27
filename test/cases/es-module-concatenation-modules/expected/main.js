@@ -68,13 +68,13 @@ __webpack_require__.d(index_namespaceObject, {
 });
 
 ;// CONCATENATED MODULE: ./a.css
-// extracted by mini-css-extract-plugin
+// extracted by precise-mini-css-extract-plugin
 var a = "foo__a";
 ;// CONCATENATED MODULE: ./b.css
-// extracted by mini-css-extract-plugin
+// extracted by precise-mini-css-extract-plugin
 var b = "foo__b";
 ;// CONCATENATED MODULE: ./c.css
-// extracted by mini-css-extract-plugin
+// extracted by precise-mini-css-extract-plugin
 var c = "foo__c";
 ;// CONCATENATED MODULE: ./index.js
 /* eslint-disable import/no-namespace */

@@ -1,4 +1,4 @@
-import MiniCssExtractPlugin from "../src";
+import PreciseMiniCssExtractPlugin from "../src";
 
 describe("validate options", () => {
   const tests = {
@@ -54,7 +54,7 @@ describe("validate options", () => {
 
       try {
         // eslint-disable-next-line no-new
-        new MiniCssExtractPlugin({ [key]: value });
+        new PreciseMiniCssExtractPlugin({ [key]: value });
       } catch (errorFromPlugin) {
         if (errorFromPlugin.name !== "ValidationError") {
           throw errorFromPlugin;

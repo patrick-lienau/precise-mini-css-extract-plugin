@@ -21,13 +21,13 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 
 ;// CONCATENATED MODULE: ./a.css
-// extracted by mini-css-extract-plugin
+// extracted by precise-mini-css-extract-plugin
 
 ;// CONCATENATED MODULE: ./b.css
-// extracted by mini-css-extract-plugin
+// extracted by precise-mini-css-extract-plugin
 
 ;// CONCATENATED MODULE: ./c.css
-// extracted by mini-css-extract-plugin
+// extracted by precise-mini-css-extract-plugin
 
 ;// CONCATENATED MODULE: ./index.js
 

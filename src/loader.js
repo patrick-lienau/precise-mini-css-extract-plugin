@@ -12,7 +12,7 @@ const {
 } = require("./utils");
 const schema = require("./loader-options.json");
 
-const MiniCssExtractPlugin = require("./index");
+const PreciseMiniCssExtractPlugin = require("./index");
 
 /** @typedef {import("schema-utils/declarations/validate").Schema} Schema */
 /** @typedef {import("webpack").Compiler} Compiler */
@@ -74,13 +74,13 @@ function pitch(request) {
   const emit = typeof options.emit !== "undefined" ? options.emit : true;
   const callback = this.async();
   const optionsFromPlugin = /** @type {TODO} */ (this)[
-    MiniCssExtractPlugin.pluginSymbol
+    PreciseMiniCssExtractPlugin.pluginSymbol
   ];
 
   if (!optionsFromPlugin) {
     callback(
       new Error(
-        "You forgot to add 'mini-css-extract-plugin' plugin (i.e. `{ plugins: [new MiniCssExtractPlugin()] }`), please read https://github.com/webpack-contrib/mini-css-extract-plugin#getting-started"
+        "You forgot to add 'precise-mini-css-extract-plugin' plugin (i.e. `{ plugins: [new PreciseMiniCssExtractPlugin()] }`), please read https://github.com/patrick-lienau/precise-mini-css-extract-plugin#getting-started"
       )
     );
 
@@ -129,7 +129,8 @@ function pitch(request) {
           identifierCountMap.get(
             /** @type {Dependency} */ (dependency).identifier
           ) || 0;
-        const CssDependency = MiniCssExtractPlugin.getCssDependency(webpack);
+        const CssDependency =
+          PreciseMiniCssExtractPlugin.getCssDependency(webpack);
 
         /** @type {NormalModule} */
         (this._module).addDependency(
@@ -242,7 +243,7 @@ function pitch(request) {
       ? `\nexport {};`
       : "";
 
-    let resultSource = `// extracted by ${MiniCssExtractPlugin.pluginName}`;
+    let resultSource = `// extracted by ${PreciseMiniCssExtractPlugin.pluginName}`;
 
     // only attempt hotreloading if the css is actually used for something other than hash values
     resultSource +=
@@ -337,7 +338,7 @@ function pitch(request) {
   const childCompiler =
     /** @type {Compilation} */
     (this._compilation).createChildCompiler(
-      `${MiniCssExtractPlugin.pluginName} ${request}`,
+      `${PreciseMiniCssExtractPlugin.pluginName} ${request}`,
       outputOptions
     );
 
@@ -382,7 +383,7 @@ function pitch(request) {
   const { NormalModule } = webpack;
 
   childCompiler.hooks.thisCompilation.tap(
-    `${MiniCssExtractPlugin.pluginName} loader`,
+    `${PreciseMiniCssExtractPlugin.pluginName} loader`,
     /**
      * @param {Compilation} compilation
      */
@@ -391,7 +392,7 @@ function pitch(request) {
         NormalModule.getCompilationHooks(compilation).loader;
 
       normalModuleHook.tap(
-        `${MiniCssExtractPlugin.pluginName} loader`,
+        `${PreciseMiniCssExtractPlugin.pluginName} loader`,
         (loaderContext, module) => {
           if (module.request === request) {
             // eslint-disable-next-line no-param-reassign
@@ -413,13 +414,13 @@ function pitch(request) {
   let source;
 
   childCompiler.hooks.compilation.tap(
-    MiniCssExtractPlugin.pluginName,
+    PreciseMiniCssExtractPlugin.pluginName,
     /**
      * @param {Compilation} compilation
      */
     (compilation) => {
       compilation.hooks.processAssets.tap(
-        MiniCssExtractPlugin.pluginName,
+        PreciseMiniCssExtractPlugin.pluginName,
         () => {
           source =
             compilation.assets[childFilename] &&

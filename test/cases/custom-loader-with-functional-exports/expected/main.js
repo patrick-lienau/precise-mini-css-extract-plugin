@@ -10,7 +10,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "cnA": () => (/* binding */ cnA),
 /* harmony export */   "cnB": () => (/* binding */ cnB)
 /* harmony export */ });
-// extracted by mini-css-extract-plugin
+// extracted by precise-mini-css-extract-plugin
 var cnA = () => "class-name-a";
 var cnB = () => "class-name-b";
 

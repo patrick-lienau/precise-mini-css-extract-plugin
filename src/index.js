@@ -44,6 +44,7 @@ const {
  * @property {Required<Configuration>['output']['chunkFilename']} [chunkFilename]
  * @property {boolean} [ignoreOrder]
  * @property {string | ((linkTag: HTMLLinkElement) => void)} [insert]
+ * @property {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
  * @property {Record<string, string>} [attributes]
  * @property {string | false | 'text/css'} [linkType]
  * @property {boolean} [runtime]
@@ -56,6 +57,7 @@ const {
  * @property {Required<Configuration>['output']['chunkFilename']} [chunkFilename]
  * @property {boolean} ignoreOrder
  * @property {string | ((linkTag: HTMLLinkElement) => void)} [insert]
+ * @property {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
  * @property {Record<string, string>} [attributes]
  * @property {string | false | 'text/css'} [linkType]
  * @property {boolean} runtime
@@ -65,13 +67,14 @@ const {
 /**
  * @typedef {Object} RuntimeOptions
  * @property {string | ((linkTag: HTMLLinkElement) => void) | undefined} insert
+ * @property {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
  * @property {string | false | 'text/css'} linkType
  * @property {Record<string, string> | undefined} attributes
  */
 
 /** @typedef {any} TODO */
 
-const pluginName = "mini-css-extract-plugin";
+const pluginName = "precise-mini-css-extract-plugin";
 const pluginSymbol = Symbol(pluginName);
 
 const DEFAULT_FILENAME = "[name].css";
@@ -113,7 +116,7 @@ const cssDependencyCache = new WeakMap();
  */
 const registered = new WeakSet();
 
-class MiniCssExtractPlugin {
+class PreciseMiniCssExtractPlugin {
   /**
    * @param {Compiler["webpack"]} webpack
    * @returns {CssModuleConstructor}
@@ -538,6 +541,10 @@ class MiniCssExtractPlugin {
      */
     this.runtimeOptions = {
       insert: options.insert,
+      shouldReloadLink:
+        typeof options.shouldReloadLink === "undefined"
+          ? "withLocals"
+          : options.shouldReloadLink,
       linkType:
         // Todo in next major release set default to "false"
         (typeof options.linkType === "boolean" &&
@@ -601,7 +608,7 @@ class MiniCssExtractPlugin {
       registered.add(webpack);
 
       webpack.util.serialization.registerLoader(
-        /^mini-css-extract-plugin\//,
+        /^precise-mini-css-extract-plugin\//,
         trueFn
       );
     }
@@ -617,8 +624,8 @@ class MiniCssExtractPlugin {
       }
     }
 
-    const CssModule = MiniCssExtractPlugin.getCssModule(webpack);
-    const CssDependency = MiniCssExtractPlugin.getCssDependency(webpack);
+    const CssModule = PreciseMiniCssExtractPlugin.getCssModule(webpack);
+    const CssDependency = PreciseMiniCssExtractPlugin.getCssDependency(webpack);
 
     const { NormalModule } = compiler.webpack;
 
@@ -1430,8 +1437,8 @@ class MiniCssExtractPlugin {
   }
 }
 
-MiniCssExtractPlugin.pluginName = pluginName;
-MiniCssExtractPlugin.pluginSymbol = pluginSymbol;
-MiniCssExtractPlugin.loader = require.resolve("./loader");
+PreciseMiniCssExtractPlugin.pluginName = pluginName;
+PreciseMiniCssExtractPlugin.pluginSymbol = pluginSymbol;
+PreciseMiniCssExtractPlugin.loader = require.resolve("./loader");
 
-module.exports = MiniCssExtractPlugin;
+module.exports = PreciseMiniCssExtractPlugin;

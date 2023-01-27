@@ -18,7 +18,7 @@ it("should enforce esm for empty module without options.esModule", async () => {
     modules.filter((m) => m.moduleType !== "runtime" && !m.orphan).length
   ).toBe(2);
   expect(source("./simple.css", stats)).toMatchInlineSnapshot(`
-    "// extracted by mini-css-extract-plugin
+    "// extracted by precise-mini-css-extract-plugin
     export {};"
   `);
 });
@@ -41,7 +41,7 @@ it("should enforce esm for empty module with options.esModule", async () => {
     modules.filter((m) => m.moduleType !== "runtime" && !m.orphan).length
   ).toBe(2);
   expect(source("./simple.css", stats)).toMatchInlineSnapshot(`
-    "// extracted by mini-css-extract-plugin
+    "// extracted by precise-mini-css-extract-plugin
     export {};"
   `);
 });
@@ -64,6 +64,6 @@ it('should keep empty module when options.esModule is equal "false"', async () =
     modules.filter((m) => m.moduleType !== "runtime" && !m.orphan).length
   ).toBe(2);
   expect(source("./simple.css", stats)).toMatchInlineSnapshot(
-    `"// extracted by mini-css-extract-plugin"`
+    `"// extracted by precise-mini-css-extract-plugin"`
   );
 });

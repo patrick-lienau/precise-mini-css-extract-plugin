@@ -1,7 +1,7 @@
 /* eslint-env browser */
 import path from "path";
 
-import MiniCssExtractPlugin from "../src";
+import PreciseMiniCssExtractPlugin from "../src";
 
 import {
   compile,
@@ -23,7 +23,7 @@ describe("noRuntime option", () => {
           filename: "[name].bundle.js",
         },
         plugins: [
-          new MiniCssExtractPlugin({
+          new PreciseMiniCssExtractPlugin({
             filename: "[name].css",
           }),
         ],
@@ -52,7 +52,7 @@ describe("noRuntime option", () => {
           filename: "[name].bundle.js",
         },
         plugins: [
-          new MiniCssExtractPlugin({
+          new PreciseMiniCssExtractPlugin({
             runtime: false,
             filename: "[name].css",
           }),
@@ -84,7 +84,7 @@ describe("noRuntime option", () => {
           filename: "[name].bundle.js",
         },
         plugins: [
-          new MiniCssExtractPlugin({
+          new PreciseMiniCssExtractPlugin({
             runtime: true,
             filename: "[name].css",
           }),

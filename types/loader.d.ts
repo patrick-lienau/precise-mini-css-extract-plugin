@@ -25,9 +25,9 @@ export type Dependency = {
  * @param {string} request
  */
 export function pitch(
-  this: import("webpack").LoaderContext<MiniCssExtractPlugin.LoaderOptions>,
+  this: import("webpack").LoaderContext<PreciseMiniCssExtractPlugin.LoaderOptions>,
   request: string
 ): void;
-import MiniCssExtractPlugin = require("./index");
+import PreciseMiniCssExtractPlugin = require("./index");
 declare function _default(): void;
 export { _default as default };

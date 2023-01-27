@@ -3,7 +3,7 @@
   <a href="https://webpack.js.org/">
     <img width="200" height="200" vspace="" hspace="25" src="https://cdn.rawgit.com/webpack/media/e7485eb2/logo/icon-square-big.svg">
   </a>
-  <h1>mini-css-extract-plugin</h1>
+  <h1>precise-mini-css-extract-plugin</h1>
 </div>
 
 [![npm][npm]][npm-url]
@@ -13,7 +13,16 @@
 [![chat][chat]][chat-url]
 [![size][size]][size-url]
 
-# mini-css-extract-plugin
+# precise-mini-css-extract-plugin
+
+## Why the fork?
+
+> This package is just `mini-css-extract-plugin` with one small difference. In a project I was working on, `mini-css-extract-plugin` was reloading every single `<link>` in the DOM whenever
+> a change was made. Normally this isn't an issue, but on this particular site, removing then reinserting the `<link>` node into the DOM caused all kinds of issues.
+
+> Looking at `mini-css-extract-plugin`'s source, it appears that if it detects that css modules are being used, it will reload _EVERYTHING_, all the `<link>`s, even if they have nothing to do with the assets in question. I can only assume this was done to invalidate `<link>`s for other chunks of css which might be using `locals` (the scrambled css classnames) from the current chunk but somehow were not part of compilation from WDS? I expect that webpack would be able to pick up on the relation between the chunks but perhaps I'm wrong, or perhaps at the time that code was written the behavior was different. Either way, I don't much care, I just added the ability to inline a predicate into the update chunk which is used to test each `<link>` and determine if it be reloaded. Should be flexible enough for any conceivable use case.
+
+---
 
 This plugin extracts CSS into separate files. It creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
 
@@ -28,25 +37,25 @@ Compared to the extract-text-webpack-plugin:
 
 ## Getting Started
 
-To begin, you'll need to install `mini-css-extract-plugin`:
+To begin, you'll need to install `precise-mini-css-extract-plugin`:
 
 ```console
-npm install --save-dev mini-css-extract-plugin
+npm install --save-dev precise-mini-css-extract-plugin
 ```
 
 or
 
 ```console
-yarn add -D mini-css-extract-plugin
+yarn add -D precise-mini-css-extract-plugin
 ```
 
 or
 
 ```console
-pnpm add -D mini-css-extract-plugin
+pnpm add -D precise-mini-css-extract-plugin
 ```
 
-It's recommended to combine `mini-css-extract-plugin` with the [`css-loader`](https://github.com/webpack-contrib/css-loader)
+It's recommended to combine `precise-mini-css-extract-plugin` with the [`css-loader`](https://github.com/webpack-contrib/css-loader)
 
 Then add the loader and the plugin to your `webpack` config. For example:
 
@@ -67,15 +76,15 @@ import "./style.css";
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [new PreciseMiniCssExtractPlugin()],
   module: {
     rules: [
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [PreciseMiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -84,7 +93,7 @@ module.exports = {
 
 > **Warning**
 >
-> Note that if you import CSS from your webpack entrypoint or import styles in the [initial](https://webpack.js.org/concepts/under-the-hood/#chunks) chunk, `mini-css-extract-plugin` will not load this CSS into the page. Please use [`html-webpack-plugin`](https://github.com/jantimon/html-webpack-plugin) for automatic generation `link` tags or create `index.html` file with `link` tag.
+> Note that if you import CSS from your webpack entrypoint or import styles in the [initial](https://webpack.js.org/concepts/under-the-hood/#chunks) chunk, `precise-mini-css-extract-plugin` will not load this CSS into the page. Please use [`html-webpack-plugin`](https://github.com/jantimon/html-webpack-plugin) for automatic generation `link` tags or create `index.html` file with `link` tag.
 
 > **Warning**
 >
@@ -166,7 +175,7 @@ Inserts the `link` tag at the given position for [non-initial (async)](https://w
 >
 > Only for [non-initial (async)](https://webpack.js.org/concepts/under-the-hood/#chunks) chunks.
 
-By default, the `mini-css-extract-plugin` appends styles (`<link>` elements) to `document.head` of the current `window`.
+By default, the `precise-mini-css-extract-plugin` appends styles (`<link>` elements) to `document.head` of the current `window`.
 
 However in some circumstances it might be necessary to have finer control over the append target or even delay `link` elements insertion.
 For example this is the case when you asynchronously load styles for an application that runs inside of an iframe.
@@ -182,7 +191,7 @@ A new `<link>` element will be inserted after the found item.
 **webpack.config.js**
 
 ```js
-new MiniCssExtractPlugin({
+new PreciseMiniCssExtractPlugin({
   insert: "#some-element",
 });
 ```
@@ -200,7 +209,7 @@ Allows to override default behavior and insert styles at any position.
 **webpack.config.js**
 
 ```js
-new MiniCssExtractPlugin({
+new PreciseMiniCssExtractPlugin({
   insert: function (linkTag) {
     var reference = document.querySelector("#some-element");
     if (reference) {
@@ -226,16 +235,16 @@ Default: `{}`
 >
 > Only for [non-initial (async)](https://webpack.js.org/concepts/under-the-hood/#chunks) chunks.
 
-If defined, the `mini-css-extract-plugin` will attach given attributes with their values on `<link>` element.
+If defined, the `precise-mini-css-extract-plugin` will attach given attributes with their values on `<link>` element.
 
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       attributes: {
         id: "target",
         "data-target": "example",
@@ -246,7 +255,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [PreciseMiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -276,11 +285,11 @@ Possible values: `text/css`
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       linkType: "text/css",
     }),
   ],
@@ -288,7 +297,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [PreciseMiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -302,11 +311,11 @@ module.exports = {
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       linkType: false,
     }),
   ],
@@ -314,7 +323,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [PreciseMiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -340,11 +349,11 @@ For example, you can use [assets-webpack-plugin](https://github.com/ztoben/asset
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       runtime: false,
     }),
   ],
@@ -352,7 +361,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [PreciseMiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -380,11 +389,11 @@ When combined with `experiments.layers`, this adds a `layer` option to the loade
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       // You don't need this for `>= 5.52.0` due to the fact that this is enabled by default
       // Required only for `>= 5.33.2 & <= 5.52.0`
       // Not available/unsafe for `<= 5.33.2`
@@ -395,7 +404,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [PreciseMiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -428,11 +437,11 @@ Works like [`output.publicPath`](https://webpack.js.org/configuration/output/#ou
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename: "[name].css",
@@ -445,7 +454,7 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: PreciseMiniCssExtractPlugin.loader,
             options: {
               publicPath: "/public/path/to/",
             },
@@ -463,11 +472,11 @@ module.exports = {
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename: "[name].css",
@@ -480,7 +489,7 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: PreciseMiniCssExtractPlugin.loader,
             options: {
               publicPath: (resourcePath, context) => {
                 return path.relative(path.dirname(resourcePath), context) + "/";
@@ -518,7 +527,7 @@ type esModule = boolean;
 
 Default: `true`
 
-By default, `mini-css-extract-plugin` generates JS modules that use the ES modules syntax.
+By default, `precise-mini-css-extract-plugin` generates JS modules that use the ES modules syntax.
 There are some cases in which using ES modules is beneficial, like in the case of [module concatenation](https://webpack.js.org/plugins/module-concatenation-plugin/) and [tree shaking](https://webpack.js.org/guides/tree-shaking/).
 
 You can enable a CommonJS syntax using:
@@ -526,17 +535,17 @@ You can enable a CommonJS syntax using:
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [new PreciseMiniCssExtractPlugin()],
   module: {
     rules: [
       {
         test: /\.css$/i,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: PreciseMiniCssExtractPlugin.loader,
             options: {
               esModule: false,
             },
@@ -554,15 +563,15 @@ module.exports = {
 ### Recommended
 
 For `production` builds it's recommended to extract the CSS from your bundle being able to use parallel loading of CSS/JS resources later on.
-This can be achieved by using the `mini-css-extract-plugin`, because it creates separate css files.
+This can be achieved by using the `precise-mini-css-extract-plugin`, because it creates separate css files.
 For `development` mode (including `webpack-dev-server`) you can use [style-loader](https://github.com/webpack-contrib/style-loader), because it injects CSS into the DOM using multiple <style></style> and works faster.
 
-> Do not use `style-loader` and `mini-css-extract-plugin` together.
+> Do not use `style-loader` and `precise-mini-css-extract-plugin` together.
 
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
@@ -571,7 +580,7 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+          devMode ? "style-loader" : PreciseMiniCssExtractPlugin.loader,
           "css-loader",
           "postcss-loader",
           "sass-loader",
@@ -579,7 +588,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [].concat(devMode ? [] : [new MiniCssExtractPlugin()]),
+  plugins: [].concat(devMode ? [] : [new PreciseMiniCssExtractPlugin()]),
 };
 ```
 
@@ -588,11 +597,11 @@ module.exports = {
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // all options are optional
       filename: "[name].css",
@@ -606,7 +615,7 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: PreciseMiniCssExtractPlugin.loader,
             options: {
               // you can specify a publicPath here
               // by default it uses publicPath in webpackOptions.output
@@ -653,17 +662,17 @@ You can enable a ES module named export using:
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [new PreciseMiniCssExtractPlugin()],
   module: {
     rules: [
       {
         test: /\.css$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: PreciseMiniCssExtractPlugin.loader,
           },
           {
             loader: "css-loader",
@@ -687,11 +696,11 @@ module.exports = {
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename: "[name].css",
@@ -704,7 +713,7 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: PreciseMiniCssExtractPlugin.loader,
             options: {
               publicPath: (resourcePath, context) => {
                 // publicPath is the relative path of the resource to the context
@@ -737,11 +746,11 @@ You should not use `HotModuleReplacementPlugin` plugin if you are using a `webpa
 
 ```js
 const webpack = require("webpack");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== "production";
 
 const plugins = [
-  new MiniCssExtractPlugin({
+  new PreciseMiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output
     // both options are optional
     filename: devMode ? "[name].css" : "[name].[contenthash].css",
@@ -760,7 +769,7 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          PreciseMiniCssExtractPlugin.loader,
           "css-loader",
           "postcss-loader",
           "sass-loader",
@@ -777,7 +786,7 @@ module.exports = {
 >
 > HMR is automatically supported in webpack 5. No need to configure it. Skip the following:
 
-The `mini-css-extract-plugin` supports hot reloading of actual css files in development.
+The `precise-mini-css-extract-plugin` supports hot reloading of actual css files in development.
 Some options are provided to enable HMR of both standard stylesheets and locally scoped CSS or CSS modules.
 Below is an example configuration of mini-css for HMR use with CSS modules.
 
@@ -788,10 +797,10 @@ You should not use `HotModuleReplacementPlugin` plugin if you are using a `webpa
 
 ```js
 const webpack = require("webpack");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 const plugins = [
-  new MiniCssExtractPlugin({
+  new PreciseMiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output
     // both options are optional
     filename: devMode ? "[name].css" : "[name].[contenthash].css",
@@ -811,7 +820,7 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: PreciseMiniCssExtractPlugin.loader,
             options: {},
           },
           "css-loader",
@@ -829,12 +838,12 @@ To minify the output, use a plugin like [css-minimizer-webpack-plugin](https://g
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css",
     }),
@@ -843,7 +852,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [PreciseMiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -874,7 +883,7 @@ The CSS can be extracted in one CSS file using `optimization.splitChunks.cacheGr
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   optimization: {
@@ -890,7 +899,7 @@ module.exports = {
     },
   },
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       filename: "[name].css",
     }),
   ],
@@ -898,7 +907,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [PreciseMiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -915,7 +924,7 @@ This also prevents the CSS duplication issue one had with the ExtractTextPlugin.
 
 ```js
 const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   entry: {
@@ -945,7 +954,7 @@ module.exports = {
     },
   },
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       filename: "[name].css",
     }),
   ],
@@ -953,7 +962,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [PreciseMiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -969,11 +978,11 @@ In the example below, we'll use `filename` to output the generated css into a di
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       filename: ({ chunk }) => `${chunk.name.replace("/js/", "/css/")}.css`,
     }),
   ],
@@ -981,7 +990,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [PreciseMiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -995,11 +1004,11 @@ For long term caching use `filename: "[contenthash].css"`. Optionally add `[name
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       filename: "[name].[contenthash].css",
       chunkFilename: "[id].[contenthash].css",
     }),
@@ -1008,7 +1017,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [PreciseMiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -1022,11 +1031,11 @@ For projects where css ordering has been mitigated through consistent use of sco
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       ignoreOrder: true,
     }),
   ],
@@ -1034,7 +1043,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [PreciseMiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -1046,7 +1055,7 @@ module.exports = {
 **webpack.config.js**
 
 ```js
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PreciseMiniCssExtractPlugin = require("precise-mini-css-extract-plugin");
 
 module.exports = {
   entry: "./src/index.js",
@@ -1058,7 +1067,7 @@ module.exports = {
           {
             resourceQuery: "?dark",
             use: [
-              MiniCssExtractPlugin.loader,
+              PreciseMiniCssExtractPlugin.loader,
               "css-loader",
               {
                 loader: "sass-loader",
@@ -1070,7 +1079,7 @@ module.exports = {
           },
           {
             use: [
-              MiniCssExtractPlugin.loader,
+              PreciseMiniCssExtractPlugin.loader,
               "css-loader",
               {
                 loader: "sass-loader",
@@ -1085,7 +1094,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin({
+    new PreciseMiniCssExtractPlugin({
       filename: "[name].css",
       attributes: {
         id: "theme",
@@ -1202,15 +1211,15 @@ Please take a moment to read our contributing guidelines if you haven't yet done
 
 [MIT](./LICENSE)
 
-[npm]: https://img.shields.io/npm/v/mini-css-extract-plugin.svg
-[npm-url]: https://npmjs.com/package/mini-css-extract-plugin
-[node]: https://img.shields.io/node/v/mini-css-extract-plugin.svg
+[npm]: https://img.shields.io/npm/v/precise-mini-css-extract-plugin.svg
+[npm-url]: https://npmjs.com/package/precise-mini-css-extract-plugin
+[node]: https://img.shields.io/node/v/precise-mini-css-extract-plugin.svg
 [node-url]: https://nodejs.org
-[tests]: https://github.com/webpack-contrib/mini-css-extract-plugin/workflows/mini-css-extract-plugin/badge.svg
-[tests-url]: https://github.com/webpack-contrib/mini-css-extract-plugin/actions
-[cover]: https://codecov.io/gh/webpack-contrib/mini-css-extract-plugin/branch/master/graph/badge.svg
-[cover-url]: https://codecov.io/gh/webpack-contrib/mini-css-extract-plugin
+[tests]: https://github.com/webpack-contrib/precise-mini-css-extract-plugin/workflows/precise-mini-css-extract-plugin/badge.svg
+[tests-url]: https://github.com/webpack-contrib/precise-mini-css-extract-plugin/actions
+[cover]: https://codecov.io/gh/webpack-contrib/precise-mini-css-extract-plugin/branch/master/graph/badge.svg
+[cover-url]: https://codecov.io/gh/webpack-contrib/precise-mini-css-extract-plugin
 [chat]: https://badges.gitter.im/webpack/webpack.svg
 [chat-url]: https://gitter.im/webpack/webpack
-[size]: https://packagephobia.now.sh/badge?p=mini-css-extract-plugin
-[size-url]: https://packagephobia.now.sh/result?p=mini-css-extract-plugin
+[size]: https://packagephobia.now.sh/badge?p=precise-mini-css-extract-plugin
+[size-url]: https://packagephobia.now.sh/result?p=precise-mini-css-extract-plugin

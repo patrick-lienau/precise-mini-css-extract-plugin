@@ -3,7 +3,7 @@ import path from "path";
 import webpack from "webpack";
 import { createFsFromVolume, Volume } from "memfs";
 
-import MiniCssExtractPlugin from "../../src";
+import PreciseMiniCssExtractPlugin from "../../src";
 
 export default (fixture, loaderOptions = {}, config = {}) => {
   const { outputFileSystem, ...cnfg } = config;
@@ -24,7 +24,7 @@ export default (fixture, loaderOptions = {}, config = {}) => {
           test: /\.css$/i,
           rules: [
             {
-              loader: MiniCssExtractPlugin.loader,
+              loader: PreciseMiniCssExtractPlugin.loader,
               options: loaderOptions || {},
             },
             {
@@ -41,7 +41,7 @@ export default (fixture, loaderOptions = {}, config = {}) => {
       }),
     },
     plugins: [
-      new MiniCssExtractPlugin({
+      new PreciseMiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
         filename: "[name].css",
