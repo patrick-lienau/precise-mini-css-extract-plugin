@@ -58,12 +58,11 @@ function hotLoader(content, context) {
       )})(module.id, ${JSON.stringify({
     ...rest,
     locals: !!context.locals,
-  })}, ${
-    typeof shouldReloadLink === "string" ||
-    typeof shouldReloadLink === "undefined"
-      ? `"${shouldReloadLink || "withLocals"}"`
-      : shouldReloadLink.toString()
-  });
+  }).slice(0, -1)}, "shouldReloadLink": ${
+    typeof shouldReloadLink === "function"
+      ? shouldReloadLink.toString()
+      : `"${shouldReloadLink || "alwaysLocals"}"`
+  }});
       module.hot.dispose(cssReload);
       ${accept}
     }

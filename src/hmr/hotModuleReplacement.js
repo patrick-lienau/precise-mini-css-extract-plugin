@@ -219,15 +219,19 @@ function reloadStyle(src) {
   return loaded;
 }
 
-function reloadAll() {
+/**
+ * @param {((el: HTMLLinkElement) => boolean)} [predicate]
+ */
+function reloadAll(predicate) {
   const elements = document.querySelectorAll("link");
 
   forEach.call(elements, (el) => {
     if (el.visited === true) {
       return;
     }
-
-    updateCss(el);
+    if (!predicate || predicate(el)) {
+      updateCss(el);
+    }
   });
 }
 
@@ -250,10 +254,9 @@ let warned = false;
 /**
  * @param {TODO} moduleId
  * @param {TODO} options
- * @param {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} shouldReloadLink
  * @returns {TODO}
  */
-module.exports = function (moduleId, options, shouldReloadLink) {
+module.exports = function (moduleId, options) {
   if (noDocument) {
     if (!warned) {
       console.log("no window.document found, will not HMR CSS");
@@ -262,8 +265,6 @@ module.exports = function (moduleId, options, shouldReloadLink) {
 
     return noop;
   }
-  console.log(shouldReloadLink);
-
   const getScriptSrc = getCurrentScriptUrl(moduleId);
 
   function update() {
@@ -271,21 +272,35 @@ module.exports = function (moduleId, options, shouldReloadLink) {
     const reloaded = reloadStyle(src);
 
     if (options.locals) {
-      console.log("[HMR] Detected local css modules. Reload all css");
-
+      if (
+        options.shouldReloadLink === "always" ||
+        options.shouldReloadLink === "alwaysLocals"
+      ) {
+        console.log("[HMR] detected css module update(s): reloading all css");
+        reloadAll();
+      } else if (options.shouldReloadLink === "never") {
+        console.log(
+          "[HMR] detected css module update(s): reloading is disabled."
+        );
+      } else {
+        console.log(
+          "[HMR] detected css module updates(s): reloading css matching predicate"
+        );
+        reloadAll(options.shouldReloadLink);
+      }
+    } else if (reloaded) {
+      console.log("[HMR] detected css update(s): reloading %s", src.join(" "));
+    } else if (options.shouldReloadLink === "always") {
+      console.log("[HMR] detected css update(s): reloading all css");
       reloadAll();
-
-      return;
-    }
-
-    if (reloaded) {
-      console.log("[HMR] css reload %s", src.join(" "));
+    } else if (typeof options.shouldReloadLink === "function") {
+      console.log(
+        "[HMR] detected css update(s): reloading css matching predicate"
+      );
+      reloadAll(options.shouldReloadLink);
     } else {
-      console.log("[HMR] Reload all css");
-
-      reloadAll();
+      console.log("[HMR] detected css update(s): reloading is disabled");
     }
   }
-
   return debounce(update, 50);
 };

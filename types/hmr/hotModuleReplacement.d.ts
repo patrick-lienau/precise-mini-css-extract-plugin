@@ -1,11 +1,3 @@
-declare function _exports(
-  moduleId: TODO,
-  options: TODO,
-  shouldReloadLink:
-    | "always"
-    | "never"
-    | "withLocals"
-    | ((linkTag: HTMLLinkElement) => boolean)
-): TODO;
+declare function _exports(moduleId: TODO, options: TODO): TODO;
 export = _exports;
 export type TODO = any;

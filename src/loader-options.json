@@ -9,11 +9,25 @@
           "type": "string"
         },
         {
-          "instanceof": "Function"
+          "instanceof": "Function",
+          "isType": "((linkTag: HTMLLinkElement) => boolean)"
         }
       ],
       "description": "Specifies a custom public path for the external resources like images, files, etc inside CSS.",
       "link": "https://github.com/patrick-lienau/precise-mini-css-extract-plugin#publicpath"
+    },
+    "shouldReloadLink": {
+      "description": "Predicate function run when applying a HMR update to test if <link> need to be reloaded",
+      "link": "https://github.com/patrick-lienau/precise-mini-css-extract-plugin#shouldreloadlink",
+      "anyOf": [
+        {
+          "enum": ["always", "never", "alwaysLocals"]
+        },
+        {
+          "instanceof": "Function",
+          "isType": "((linkTag: HTMLLinkElement) => boolean)"
+        }
+      ]
     },
     "emit": {
       "type": "boolean",

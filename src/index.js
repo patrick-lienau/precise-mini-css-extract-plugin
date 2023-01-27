@@ -33,7 +33,7 @@ const {
 /**
  * @typedef {Object} LoaderOptions
  * @property {string | ((resourcePath: string, rootContext: string) => string)} [publicPath]
- * @property {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
+ * @property {'never'|'alwaysLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
  * @property {boolean} [emit]
  * @property {boolean} [esModule]
  * @property {string} [layer]
@@ -45,7 +45,6 @@ const {
  * @property {Required<Configuration>['output']['chunkFilename']} [chunkFilename]
  * @property {boolean} [ignoreOrder]
  * @property {string | ((linkTag: HTMLLinkElement) => void)} [insert]
- * @property {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
  * @property {Record<string, string>} [attributes]
  * @property {string | false | 'text/css'} [linkType]
  * @property {boolean} [runtime]
@@ -58,7 +57,6 @@ const {
  * @property {Required<Configuration>['output']['chunkFilename']} [chunkFilename]
  * @property {boolean} ignoreOrder
  * @property {string | ((linkTag: HTMLLinkElement) => void)} [insert]
- * @property {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
  * @property {Record<string, string>} [attributes]
  * @property {string | false | 'text/css'} [linkType]
  * @property {boolean} runtime
@@ -68,7 +66,6 @@ const {
 /**
  * @typedef {Object} RuntimeOptions
  * @property {string | ((linkTag: HTMLLinkElement) => void) | undefined} insert
- * @property {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
  * @property {string | false | 'text/css'} linkType
  * @property {Record<string, string> | undefined} attributes
  */
@@ -542,10 +539,7 @@ class PreciseMiniCssExtractPlugin {
      */
     this.runtimeOptions = {
       insert: options.insert,
-      shouldReloadLink:
-        typeof options.shouldReloadLink === "undefined"
-          ? "withLocals"
-          : options.shouldReloadLink,
+
       linkType:
         // Todo in next major release set default to "false"
         (typeof options.linkType === "boolean" &&

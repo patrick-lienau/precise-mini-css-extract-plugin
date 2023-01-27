@@ -108,12 +108,6 @@ type PluginOptions = {
   chunkFilename?: Required<Configuration>["output"]["chunkFilename"];
   ignoreOrder?: boolean | undefined;
   insert?: string | ((linkTag: HTMLLinkElement) => void) | undefined;
-  shouldReloadLink?:
-    | "always"
-    | "never"
-    | "withLocals"
-    | ((linkTag: HTMLLinkElement) => boolean)
-    | undefined;
   attributes?: Record<string, string> | undefined;
   linkType?: string | false | undefined;
   runtime?: boolean | undefined;
@@ -135,7 +129,7 @@ type PluginOptions = {
 /**
  * @typedef {Object} LoaderOptions
  * @property {string | ((resourcePath: string, rootContext: string) => string)} [publicPath]
- * @property {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
+ * @property {'never'|'alwaysLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
  * @property {boolean} [emit]
  * @property {boolean} [esModule]
  * @property {string} [layer]
@@ -146,7 +140,6 @@ type PluginOptions = {
  * @property {Required<Configuration>['output']['chunkFilename']} [chunkFilename]
  * @property {boolean} [ignoreOrder]
  * @property {string | ((linkTag: HTMLLinkElement) => void)} [insert]
- * @property {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
  * @property {Record<string, string>} [attributes]
  * @property {string | false | 'text/css'} [linkType]
  * @property {boolean} [runtime]
@@ -158,7 +151,6 @@ type PluginOptions = {
  * @property {Required<Configuration>['output']['chunkFilename']} [chunkFilename]
  * @property {boolean} ignoreOrder
  * @property {string | ((linkTag: HTMLLinkElement) => void)} [insert]
- * @property {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
  * @property {Record<string, string>} [attributes]
  * @property {string | false | 'text/css'} [linkType]
  * @property {boolean} runtime
@@ -167,7 +159,6 @@ type PluginOptions = {
 /**
  * @typedef {Object} RuntimeOptions
  * @property {string | ((linkTag: HTMLLinkElement) => void) | undefined} insert
- * @property {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
  * @property {string | false | 'text/css'} linkType
  * @property {Record<string, string> | undefined} attributes
  */
@@ -195,7 +186,7 @@ type LoaderOptions = {
   shouldReloadLink?:
     | "always"
     | "never"
-    | "withLocals"
+    | "alwaysLocals"
     | ((linkTag: HTMLLinkElement) => boolean)
     | undefined;
   emit?: boolean | undefined;
@@ -207,12 +198,6 @@ type NormalizedPluginOptions = {
   chunkFilename?: Required<Configuration>["output"]["chunkFilename"];
   ignoreOrder: boolean;
   insert?: string | ((linkTag: HTMLLinkElement) => void) | undefined;
-  shouldReloadLink?:
-    | "always"
-    | "never"
-    | "withLocals"
-    | ((linkTag: HTMLLinkElement) => boolean)
-    | undefined;
   attributes?: Record<string, string> | undefined;
   linkType?: string | false | undefined;
   runtime: boolean;
@@ -220,12 +205,6 @@ type NormalizedPluginOptions = {
 };
 type RuntimeOptions = {
   insert: string | ((linkTag: HTMLLinkElement) => void) | undefined;
-  shouldReloadLink?:
-    | "always"
-    | "never"
-    | "withLocals"
-    | ((linkTag: HTMLLinkElement) => boolean)
-    | undefined;
   linkType: string | false | "text/css";
   attributes: Record<string, string> | undefined;
 };
