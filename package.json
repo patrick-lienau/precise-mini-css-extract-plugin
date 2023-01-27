@@ -1,6 +1,7 @@
 {
   "name": "precise-mini-css-extract-plugin",
   "version": "2.7.2",
+  "type": "commonjs",
   "description": "extracts CSS into separate files, but is more precise when applying updates to the DOM",
   "license": "MIT",
   "repository": "patrick-lienau/precise-mini-css-extract-plugin",

@@ -48,6 +48,7 @@ function hotLoader(content, context) {
     ? ""
     : "module.hot.accept(undefined, cssReload);";
 
+  const { shouldReloadLink, ...rest } = context.options;
   return `${content}
     if(module.hot) {
       // ${Date.now()}
@@ -55,9 +56,14 @@ function hotLoader(content, context) {
         context.loaderContext,
         path.join(__dirname, "hmr/hotModuleReplacement.js")
       )})(module.id, ${JSON.stringify({
-    ...context.options,
+    ...rest,
     locals: !!context.locals,
-  })});
+  })}, ${
+    typeof shouldReloadLink === "string" ||
+    typeof shouldReloadLink === "undefined"
+      ? `"${shouldReloadLink || "withLocals"}"`
+      : shouldReloadLink.toString()
+  });
       module.hot.dispose(cssReload);
       ${accept}
     }

@@ -33,6 +33,7 @@ const {
 /**
  * @typedef {Object} LoaderOptions
  * @property {string | ((resourcePath: string, rootContext: string) => string)} [publicPath]
+ * @property {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} [shouldReloadLink]
  * @property {boolean} [emit]
  * @property {boolean} [esModule]
  * @property {string} [layer]

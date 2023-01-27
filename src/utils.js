@@ -83,12 +83,12 @@ function compareModulesByIdentifier(a, b) {
   return compareIds(a.identifier(), b.identifier());
 }
 
-const MODULE_TYPE = "css/mini-extract";
-const AUTO_PUBLIC_PATH = "__mini_css_extract_plugin_public_path_auto__";
+const MODULE_TYPE = "css/precise-mini-extract";
+const AUTO_PUBLIC_PATH = "__precise_mini_css_extract_plugin_public_path_auto__";
 const ABSOLUTE_PUBLIC_PATH = "webpack:///precise-mini-css-extract-plugin/";
 const BASE_URI = "webpack://";
 const SINGLE_DOT_PATH_SEGMENT =
-  "__mini_css_extract_plugin_single_dot_path_segment__";
+  "__precise_mini_css_extract_plugin_single_dot_path_segment__";
 
 /**
  * @param {string} str

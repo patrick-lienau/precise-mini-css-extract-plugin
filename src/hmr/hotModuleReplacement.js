@@ -246,17 +246,23 @@ function isUrlRequest(url) {
   return true;
 }
 
+let warned = false;
 /**
  * @param {TODO} moduleId
  * @param {TODO} options
+ * @param {'never'|'withLocals'|'always'|((linkTag: HTMLLinkElement) => boolean)} shouldReloadLink
  * @returns {TODO}
  */
-module.exports = function (moduleId, options) {
+module.exports = function (moduleId, options, shouldReloadLink) {
   if (noDocument) {
-    console.log("no window.document found, will not HMR CSS");
+    if (!warned) {
+      console.log("no window.document found, will not HMR CSS");
+      warned = true;
+    }
 
     return noop;
   }
+  console.log(shouldReloadLink);
 
   const getScriptSrc = getCurrentScriptUrl(moduleId);
 

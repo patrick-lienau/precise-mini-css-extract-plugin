@@ -34,11 +34,11 @@ export function evalModuleCode(
  * @returns {0 | 1 | -1}
  */
 export function compareModulesByIdentifier(a: Module, b: Module): 0 | 1 | -1;
-export const MODULE_TYPE: "css/mini-extract";
-export const AUTO_PUBLIC_PATH: "__mini_css_extract_plugin_public_path_auto__";
+export const MODULE_TYPE: "css/precise-mini-extract";
+export const AUTO_PUBLIC_PATH: "__precise_mini_css_extract_plugin_public_path_auto__";
 export const ABSOLUTE_PUBLIC_PATH: "webpack:///precise-mini-css-extract-plugin/";
 export const BASE_URI: "webpack://";
-export const SINGLE_DOT_PATH_SEGMENT: "__mini_css_extract_plugin_single_dot_path_segment__";
+export const SINGLE_DOT_PATH_SEGMENT: "__precise_mini_css_extract_plugin_single_dot_path_segment__";
 /**
  * @param {LoaderContext} loaderContext
  * @param {string} request
